@@ -116,7 +116,7 @@ const actors = [{
   }, {
     'who': 'treasury',
     'type': 'credit',
-    'amount': 0
+    'amount': 0,
   }, {
     'who': 'privateaser',
     'type': 'credit',
@@ -206,7 +206,7 @@ function commission()
 
     events[i].commission.insurance = 0.5 * commission;
     events[i].commission.treasury = events[i].persons;
-      events[i].commission.insurance = commission - events[i].commission.insurance-    events[i].commission.treasury;
+      events[i].commission.privateaser = commission - events[i].commission.insurance-    events[i].commission.treasury;
   }
 }
 function deductible(){
@@ -216,10 +216,43 @@ function deductible(){
     }
   }
 }
+
+function payTheActor(){
+for(var i = 0; i < actors.length;i++ )
+{
+  for(var j = 0; j < events.length;j++)
+  {
+    if(actors[i].eventId == events[j].id)
+    {
+      if(events[j].options.deductibleReduction)
+      {
+        actors[i].payment[0].amount = events[j].price ;
+        actors[i].payment[4].amount = events[j].commission.privateaser + events[j].persons;
+      }
+      else {
+          actors[i].payment[0].amount = events[j].price;
+          actors[i].payment[4].amount = events[j].commission.privateaser;
+      }
+      actors[i].payment[1].amount = (events[i].price- events[i].persons)*0.7;
+      actors[i].payment[2].amount =  events[j].commission.insurance;
+      actors[i].payment[3].amount = events[j].commission.treasury;
+      break;
+     }
+
+
+  }
+}
+
+
+
+}
+
+
 setPrice();
 reajustmentPrice();
 commission();
 deductible();
+payTheActor();
 console.log(bars);
 console.log(events);
 console.log(actors);

@@ -147,9 +147,6 @@ const actors = [{
   }]
 }];
 
-console.log(bars);
-console.log(events);
-console.log(actors);
 
 function getObj(id) {
   var i = 0;
@@ -175,7 +172,34 @@ function setPrice()
   for(var i = 0; i < events.length; i++)
   {
     events[i].price = bookingPrice(events[i].barId, events[i].persons, events[i].time);
-console.log(  events[i].price);
+//console.log(events[i].price);
   }
 }
+function reajustmentPrice() {
+
+
+    for(var i = 0; i < events.length; i++)
+    {
+      if(events[i].persons >= 10 && events[i].persons < 20 )
+      {
+          events[i].price =   events[i].price * 0.9;
+      }
+      else if(events[i].persons >= 20 && events[i].persons < 60)
+      {
+          events[i].price =   events[i].price * 0.7;
+      }
+      else if(events[i].persons >=60)
+      {
+          events[i].price =   events[i].price * 0.5;
+      }
+
+    
+  }
+
+
+}
 setPrice();
+reajustmentPrice();
+console.log(bars);
+console.log(events);
+console.log(actors);

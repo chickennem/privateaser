@@ -32,10 +32,11 @@ const events = [{
   'barId': 'f944a3ff-591b-4d5b-9b67-c7e08cba9791',
   'time': 4,
   'persons': 8,
+
   'options': {
     'deductibleReduction': false
   },
-  'price': 0,
+  'price':0,
   'commission': {
     'insurance': 0,
     'treasury': 0,
@@ -60,7 +61,7 @@ const events = [{
   'id': '94dab739-bd93-44c0-9be1-52dd07baa9f6',
   'booker': 'otacos',
   'barId': '6e06c9c0-4ab0-4d66-8325-c5fa60187cf8',
-  'distance': 5,
+  'time': 5,
   'persons': 80,
   'options': {
     'deductibleReduction': true
@@ -149,3 +150,32 @@ const actors = [{
 console.log(bars);
 console.log(events);
 console.log(actors);
+
+function getObj(id) {
+  var i = 0;
+for (i = 0; i < bars.length; i++) {
+  if(id == bars[i].id) return bars[i];
+}
+return null;
+}
+
+function bookingPrice(id, nbrPerson, time) {
+  var obj = getObj(id);
+  var price = 0;
+  if(obj != null)
+  {
+      var price = obj.pricePerHour * time + obj.pricePerPerson * nbrPerson;
+  }
+
+  return price;
+}
+
+function setPrice()
+{
+  for(var i = 0; i < events.length; i++)
+  {
+    events[i].price = bookingPrice(events[i].barId, events[i].persons, events[i].time);
+console.log(  events[i].price);
+  }
+}
+setPrice();

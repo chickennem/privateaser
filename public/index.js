@@ -209,9 +209,17 @@ function commission()
       events[i].commission.insurance = commission - events[i].commission.insurance-    events[i].commission.treasury;
   }
 }
+function deductible(){
+  for(var i = 0; i < events.length; i++){
+    if(events[i].options.deductibleReduction){
+      events[i].price += events[i].persons;
+    }
+  }
+}
 setPrice();
 reajustmentPrice();
 commission();
+deductible();
 console.log(bars);
 console.log(events);
 console.log(actors);

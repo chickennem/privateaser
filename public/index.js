@@ -193,13 +193,25 @@ function reajustmentPrice() {
           events[i].price =   events[i].price * 0.5;
       }
 
-    
+
   }
 
 
 }
+function commission()
+{
+  for(var i = 0; i < events.length;i++)
+  {
+    var commission = events[i].price * 0.3;
+
+    events[i].commission.insurance = 0.5 * commission;
+    events[i].commission.treasury = events[i].persons;
+      events[i].commission.insurance = commission - events[i].commission.insurance-    events[i].commission.treasury;
+  }
+}
 setPrice();
 reajustmentPrice();
+commission();
 console.log(bars);
 console.log(events);
 console.log(actors);
